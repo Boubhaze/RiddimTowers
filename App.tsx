@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useAudioEngine } from './hooks/useAudioEngine';
 import { FrequencyBand, SirenModel, DelayModel, PreampState, SirenState, DelayState } from './types';
