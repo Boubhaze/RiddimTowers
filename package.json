@@ -1,5 +1,6 @@
 {
   "name": "riddim-tower",
+  "homepage":"https://riddimtower.vercel.app/" ,
   "private": true,
   "version": "0.0.0",
   "type": "module",
