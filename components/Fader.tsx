@@ -14,8 +14,8 @@ const Fader: React.FC<FaderProps> = ({ value, onChange, label, muted, readOnly }
       <div className="relative flex-1 w-12 flex justify-center group">
         
         {/* Track Line */}
-        <div className="absolute h-full w-[1px] bg-gray-200"></div>
-        <div className="absolute h-full w-[1px] bg-black top-0 transition-all duration-75" style={{ height: `${(1-value) * 100}%` }}></div>
+        <div className="absolute h-full w-[1px] bg-gray-200 dark:bg-gray-800 transition-colors"></div>
+        <div className="absolute h-full w-[1px] bg-black dark:bg-white top-0 transition-all duration-75" style={{ height: `${(1-value) * 100}%` }}></div>
         
         {/* Invisible Input (Disabled if readOnly) */}
         <input
@@ -31,21 +31,21 @@ const Fader: React.FC<FaderProps> = ({ value, onChange, label, muted, readOnly }
 
         {/* Handle */}
         <div 
-            className={`absolute w-8 h-4 border border-black bg-white z-10 pointer-events-none transition-all duration-75 ease-out flex items-center justify-center
+            className={`absolute w-8 h-4 border border-black dark:border-white bg-white dark:bg-black z-10 pointer-events-none transition-all duration-75 ease-out flex items-center justify-center
             ${muted ? 'opacity-50' : ''}
             `}
             style={{ bottom: `calc(${value * 100}% - 8px)` }}
         >
-            <div className="w-4 h-[1px] bg-black"></div>
+            <div className="w-4 h-[1px] bg-black dark:bg-white"></div>
         </div>
       </div>
       
       {/* Label */}
       <div className="text-center">
-         <span className={`block text-[10px] font-mono uppercase tracking-widest ${muted ? 'line-through text-gray-400' : 'text-black'}`}>
+         <span className={`block text-[10px] font-mono uppercase tracking-widest ${muted ? 'line-through text-gray-400 dark:text-gray-600' : 'text-black dark:text-gray-300'}`}>
             {label}
          </span>
-         <span className="text-[8px] text-gray-400 font-mono">
+         <span className="text-[8px] text-gray-400 dark:text-gray-600 font-mono">
             {(value * 10).toFixed(1)}
          </span>
       </div>

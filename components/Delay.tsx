@@ -17,9 +17,9 @@ const Delay: React.FC<DelayProps> = ({ model, state, setModel, onParamChange }) 
   };
 
   return (
-    <div className="w-full h-full border border-black bg-white flex flex-col">
-       <div className="h-10 border-b border-black flex items-center justify-between px-3 bg-white">
-            <h3 className="text-xs font-medium tracking-wide">ECHO UNIT (TAPE MODEL)</h3>
+    <div className="w-full h-full border border-black dark:border-white bg-white dark:bg-black flex flex-col transition-colors">
+       <div className="h-10 border-b border-black dark:border-white flex items-center justify-between px-3 bg-white dark:bg-black">
+            <h3 className="text-xs font-medium tracking-wide text-black dark:text-white">ECHO UNIT (TAPE MODEL)</h3>
         </div>
 
         <div className="flex-1 p-6 grid grid-cols-7 gap-2 items-center">
@@ -27,7 +27,7 @@ const Delay: React.FC<DelayProps> = ({ model, state, setModel, onParamChange }) 
             <div className="flex flex-col items-center col-span-1">
                 <Knob label="SEND M" value={state.musicSend} min={0} max={1} onChange={(v) => handleChange('musicSend', v)} size="sm" />
             </div>
-            <div className="flex flex-col items-center col-span-1 border-r border-gray-200 pr-2">
+            <div className="flex flex-col items-center col-span-1 border-r border-gray-200 dark:border-gray-800 pr-2">
                 <Knob label="SEND S" value={state.sirenSend} min={0} max={1} onChange={(v) => handleChange('sirenSend', v)} size="sm" />
             </div>
 
@@ -40,7 +40,7 @@ const Delay: React.FC<DelayProps> = ({ model, state, setModel, onParamChange }) 
             </div>
             
             {/* Filters */}
-            <div className="flex flex-col items-center col-span-1 border-l border-gray-200 pl-2">
+            <div className="flex flex-col items-center col-span-1 border-l border-gray-200 dark:border-gray-800 pl-2">
                 <Knob label="HPF" value={state.filterHp} min={20} max={1000} onChange={(v) => handleChange('filterHp', v)} size="sm" />
             </div>
              <div className="flex flex-col items-center col-span-1">
@@ -48,7 +48,7 @@ const Delay: React.FC<DelayProps> = ({ model, state, setModel, onParamChange }) 
             </div>
 
             {/* Output */}
-            <div className="flex flex-col items-center col-span-1 border-l border-gray-200 pl-2">
+            <div className="flex flex-col items-center col-span-1 border-l border-gray-200 dark:border-gray-800 pl-2">
                 <Knob label="RETURN" value={state.returnLevel} min={0} max={1} onChange={(v) => handleChange('returnLevel', v)} />
             </div>
         </div>

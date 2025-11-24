@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 
 const AsciiDisplay: React.FC = () => {
@@ -110,31 +109,31 @@ const AsciiDisplay: React.FC = () => {
     <div className="flex flex-col md:flex-row gap-6 items-center md:items-end justify-center select-none pointer-events-none">
         
         {/* PREAMP CARD */}
-        <div className="bg-white border-2 border-black p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center h-full">
-            <div className="w-full text-[9px] font-mono tracking-widest text-gray-400 mb-2 border-b border-gray-100 pb-1 text-center">
+        <div className="bg-white dark:bg-black border-2 border-black dark:border-white p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] flex flex-col items-center h-full transition-colors">
+            <div className="w-full text-[9px] font-mono tracking-widest text-gray-400 dark:text-gray-500 mb-2 border-b border-gray-100 dark:border-gray-800 pb-1 text-center">
                 UNIT_01
             </div>
-            <pre className="font-mono text-[10px] leading-[1.1] whitespace-pre text-black font-bold">
+            <pre className="font-mono text-[10px] leading-[1.1] whitespace-pre text-black dark:text-white font-bold">
                 {renderPreamp()}
             </pre>
         </div>
 
         {/* SIREN CARD */}
-        <div className="bg-white border-2 border-black p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center h-full">
-             <div className="w-full text-[9px] font-mono tracking-widest text-gray-400 mb-2 border-b border-gray-100 pb-1 text-center">
+        <div className="bg-white dark:bg-black border-2 border-black dark:border-white p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] flex flex-col items-center h-full transition-colors">
+             <div className="w-full text-[9px] font-mono tracking-widest text-gray-400 dark:text-gray-500 mb-2 border-b border-gray-100 dark:border-gray-800 pb-1 text-center">
                 UNIT_02
             </div>
-            <pre className="font-mono text-[10px] leading-[1.1] whitespace-pre text-black font-bold">
+            <pre className="font-mono text-[10px] leading-[1.1] whitespace-pre text-black dark:text-white font-bold">
                 {renderSiren()}
             </pre>
         </div>
 
         {/* ECHO CARD */}
-        <div className="bg-white border-2 border-black p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center h-full">
-             <div className="w-full text-[9px] font-mono tracking-widest text-gray-400 mb-2 border-b border-gray-100 pb-1 text-center">
+        <div className="bg-white dark:bg-black border-2 border-black dark:border-white p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] flex flex-col items-center h-full transition-colors">
+             <div className="w-full text-[9px] font-mono tracking-widest text-gray-400 dark:text-gray-500 mb-2 border-b border-gray-100 dark:border-gray-800 pb-1 text-center">
                 UNIT_03
             </div>
-            <pre className="font-mono text-[10px] leading-[1.1] whitespace-pre text-black font-bold">
+            <pre className="font-mono text-[10px] leading-[1.1] whitespace-pre text-black dark:text-white font-bold">
                 {renderEcho()}
             </pre>
         </div>

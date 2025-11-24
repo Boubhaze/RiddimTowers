@@ -9,10 +9,11 @@ interface PreampProps {
   onGainChange: (band: FrequencyBand, val: number) => void;
   onMuteToggle: (band: FrequencyBand) => void;
   bandAnalysers: Record<FrequencyBand, AnalyserNode | null>;
+  darkMode?: boolean;
 }
 
 // Fixed VU Meter Component with Physics Decay
-const VuMeter: React.FC<{ analyser: AnalyserNode | null }> = ({ analyser }) => {
+const VuMeter: React.FC<{ analyser: AnalyserNode | null, darkMode?: boolean }> = ({ analyser, darkMode }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const frameIdRef = useRef<number>(0);
     const currentLevelRef = useRef<number>(0); // Store previous frame level
@@ -78,13 +79,21 @@ const VuMeter: React.FC<{ analyser: AnalyserNode | null }> = ({ analyser }) => {
                 const y = canvas.height - ((i + 1) * (segmentHeight + GAP));
                 
                 // Color Logic
-                let fill = '#eee'; // Inactive
-                
-                if (i < activeSegments) {
-                    // Active Colors
-                    if (i > SEGMENTS * 0.8) fill = '#000'; // Peak (Top 20%)
-                    else if (i > SEGMENTS * 0.5) fill = '#666'; // Mid
-                    else fill = '#999'; // Low
+                let fill;
+                if (darkMode) {
+                    fill = '#333'; // Inactive Dark Mode
+                    if (i < activeSegments) {
+                        if (i > SEGMENTS * 0.8) fill = '#FFF'; // Peak
+                        else if (i > SEGMENTS * 0.5) fill = '#AAA'; // Mid
+                        else fill = '#666'; // Low
+                    }
+                } else {
+                    fill = '#eee'; // Inactive Light Mode
+                    if (i < activeSegments) {
+                        if (i > SEGMENTS * 0.8) fill = '#000'; // Peak
+                        else if (i > SEGMENTS * 0.5) fill = '#666'; // Mid
+                        else fill = '#999'; // Low
+                    }
                 }
 
                 ctx.fillStyle = fill;
@@ -97,17 +106,17 @@ const VuMeter: React.FC<{ analyser: AnalyserNode | null }> = ({ analyser }) => {
         return () => {
             if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current);
         };
-    }, [analyser]);
+    }, [analyser, darkMode]);
 
     return <canvas ref={canvasRef} width={12} height={160} className="bg-transparent" />;
 }
 
-const Preamp: React.FC<PreampProps> = ({ state, onGainChange, onMuteToggle, bandAnalysers }) => {
+const Preamp: React.FC<PreampProps> = ({ state, onGainChange, onMuteToggle, bandAnalysers, darkMode }) => {
   const bands = Object.values(FrequencyBand);
 
   return (
-    <div className="w-full h-full border-t border-b border-black flex flex-col bg-white">
-      <div className="flex-1 flex divide-x divide-black">
+    <div className="w-full h-full border-t border-b border-black dark:border-white flex flex-col bg-white dark:bg-black transition-colors">
+      <div className="flex-1 flex divide-x divide-black dark:divide-white">
       {bands.map((band) => {
         const config = BAND_CONFIGS[band];
         const bandState = state.bands[band];
@@ -116,8 +125,8 @@ const Preamp: React.FC<PreampProps> = ({ state, onGainChange, onMuteToggle, band
           <div key={band} className="flex-1 flex flex-col relative group">
             
             {/* Header / Info */}
-            <div className="h-12 border-b border-black p-2 flex justify-between items-start">
-                 <div className="text-[9px] font-mono leading-tight text-gray-500">
+            <div className="h-12 border-b border-black dark:border-white p-2 flex justify-between items-start">
+                 <div className="text-[9px] font-mono leading-tight text-gray-500 dark:text-gray-400">
                     {config.desc}
                  </div>
             </div>
@@ -126,11 +135,12 @@ const Preamp: React.FC<PreampProps> = ({ state, onGainChange, onMuteToggle, band
             <div className="flex-1 flex flex-col items-center py-6 gap-6">
                 
                 {/* Kill Switch Area with Border */}
-                <div className="flex flex-col items-center gap-2 border border-gray-200 p-2 rounded-sm bg-gray-50/50">
-                    <span className="text-[8px] font-mono text-gray-400">KILL</span>
+                <div className="flex flex-col items-center gap-2 border border-gray-200 dark:border-gray-800 p-2 rounded-sm bg-gray-50/50 dark:bg-gray-900/50">
+                    <span className="text-[8px] font-mono text-gray-400 dark:text-gray-600">KILL</span>
                     <button 
                         onClick={() => onMuteToggle(band)}
-                        className={`w-6 h-6 border border-black transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] ${bandState.muted ? 'bg-black' : 'bg-white hover:bg-gray-100'}`}
+                        className={`w-6 h-6 border border-black dark:border-white transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] 
+                            ${bandState.muted ? 'bg-black dark:bg-white' : 'bg-white dark:bg-black hover:bg-gray-100 dark:hover:bg-gray-900'}`}
                         title="Mute"
                     >
                     </button>
@@ -157,14 +167,14 @@ const Preamp: React.FC<PreampProps> = ({ state, onGainChange, onMuteToggle, band
                     </div>
                     {/* VU Meter Column */}
                     <div className="h-full pt-4 pb-12 flex flex-col justify-end">
-                         <VuMeter analyser={bandAnalysers[band]} />
+                         <VuMeter analyser={bandAnalysers[band]} darkMode={darkMode} />
                     </div>
                 </div>
             </div>
             
             {/* Mute Indicator Text (Bottom) */}
              <div className={`absolute bottom-2 left-0 right-0 text-center pointer-events-none transition-opacity ${bandState.muted ? 'opacity-100' : 'opacity-0'}`}>
-                <span className="bg-black text-white text-[9px] px-1 font-mono">MUTED</span>
+                <span className="bg-black dark:bg-white text-white dark:text-black text-[9px] px-1 font-mono">MUTED</span>
              </div>
           </div>
         );

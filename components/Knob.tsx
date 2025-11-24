@@ -73,18 +73,18 @@ const Knob: React.FC<KnobProps> = ({
       >
         <svg width={pxSize} height={pxSize} viewBox="0 0 100 100">
             {/* Outer Ring / Track (optional, minimal doesn't always need it) */}
-            <circle cx="50" cy="50" r="48" fill="none" stroke="#E5E5E5" strokeWidth="1" />
+            <circle cx="50" cy="50" r="48" fill="none" className="stroke-gray-200 dark:stroke-gray-700 transition-colors" strokeWidth="1" />
             
             {/* The Knob Circle */}
             <g transform={`rotate(${angle} 50 50)`}>
-                <circle cx="50" cy="50" r="46" fill="#FFFFFF" stroke="black" strokeWidth="1.5" />
+                <circle cx="50" cy="50" r="46" className="fill-white dark:fill-black stroke-black dark:stroke-white transition-colors" strokeWidth="1.5" />
                 {/* The Indicator Line */}
-                <line x1="50" y1="50" x2="50" y2="10" stroke="black" strokeWidth="2" strokeLinecap="square" />
+                <line x1="50" y1="50" x2="50" y2="10" className="stroke-black dark:stroke-white transition-colors" strokeWidth="2" strokeLinecap="square" />
             </g>
         </svg>
       </div>
       {label && (
-        <span className="text-[9px] font-sans font-medium uppercase tracking-widest text-black">
+        <span className="text-[9px] font-sans font-medium uppercase tracking-widest text-black dark:text-gray-300">
           {label}
         </span>
       )}
